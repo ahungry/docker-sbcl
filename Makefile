@@ -1,11 +1,10 @@
-all: ahungry/sbcl
+all: ahungry/sbcl ahungry/sbcl-with-core
 
+ahungry/sbcl-with-core: Dockerfile-sbcl-with-core
+	docker build -f Dockerfile-sbcl-with-core -t ahungry/sbcl-with-core .
 
-$(shell echo "`sha256sum Dockerfile | cut -f1 -d' '`.checksum"):
+ahungry/sbcl: Dockerfile
 	docker build -t ahungry/sbcl .
-	touch $@
-
-ahungry/sbcl: $(shell echo "`sha256sum Dockerfile | cut -f1 -d' '`.checksum")
 
 start: ahungry/sbcl
 	docker run --rm -i -t ahungry/sbcl

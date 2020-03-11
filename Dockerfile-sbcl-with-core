@@ -1,0 +1,9 @@
+# -*- mode: dockerfile -*-
+FROM ahungry/sbcl:latest
+
+WORKDIR "/root"
+RUN sbcl --non-interactive \
+    #--eval "(mapc #'require '(sb-bsd-sockets sb-posix sb-introspect sb-cltl2 sb-rotate-byte sb-cover asdf)" \
+    --eval '(save-lisp-and-die "sbcl.core")'
+
+CMD ["/bin/sbcl", "--core", "/root/sbcl.core", "--version"]
